@@ -5,10 +5,12 @@ const app = express();
 const routes = require("./routes/auth");
 const ExpressError = require("./expressError");
 const { authenticateJWT } = require("./middleware/auth");
+const morgan = require("morgan");
 
 app.use(express.json());
 app.use(authenticateJWT);
 app.use("/", routes);
+app.use(morgan('dev'))
 
 /** 404 catch --- passes to next handler. */
 
