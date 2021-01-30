@@ -1,13 +1,16 @@
 /** Express app for auth-api. */
 
 const express = require("express");
+var cors = require('cors');
 const app = express();
+app.use(cors());
 const routes = require("./routes/auth");
 const ExpressError = require("./expressError");
 const { authenticateJWT } = require("./middleware/auth");
 const morgan = require("morgan");
 
 app.use(express.json());
+
 app.use(authenticateJWT);
 app.use("/", routes);
 app.use(morgan('dev'))

@@ -16,7 +16,7 @@ router.get('/', (req, res, next) => {
 router.post('/register', async (req, res, next) => {
   console.log('here in register', req.body);
   try {
-    const { username, password } = req.body;
+    const { username, password, first_name, last_name, therapist, email, is_admin } = req.body;
     if (!username || !password) {
       throw new ExpressError("Username and password required", 400);
     }
@@ -25,10 +25,10 @@ router.post('/register', async (req, res, next) => {
     
     // save to db
     const results = await db.query(`
-      INSERT INTO users (username, password)
-      VALUES ($1, $2)
+      INSERT INTO users (username, password, first_name, last_name, therapist, email, is_admin)
+      VALUES ($1, $2, $3, $4, $5, $6, $7)
       RETURNING username`,
-      [username, hashedPassword]);
+      [username, hashedPassword, first_name, last_name, therapist, email, is_admin]);
     console.log(results);
     return res.json(results.rows[0]);
   } catch (e) {
