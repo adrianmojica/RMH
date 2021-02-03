@@ -1,3 +1,17 @@
 .nav{
-    background-color: #FEFDFB;
+    // background-color: #FEFDFB;
+    background-color: #4e73df;
+    // background-image: linear-gradient(180deg, #4e73df 10%, #224abe 100%);
+    background-size: cover;
+    color: white;
+    a{
+        color:white;
+    }
+    .nav-item {
+        i{
+            margin-right:10px;
+        }
+        margin-left:15px
+    }
 }
+

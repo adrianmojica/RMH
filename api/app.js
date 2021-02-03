@@ -5,6 +5,8 @@ var cors = require('cors');
 const app = express();
 app.use(cors());
 const routes = require("./routes/auth");
+const users = require("./routes/users")
+
 const ExpressError = require("./expressError");
 const { authenticateJWT } = require("./middleware/auth");
 const morgan = require("morgan");
@@ -13,6 +15,7 @@ app.use(express.json());
 
 app.use(authenticateJWT);
 app.use("/", routes);
+app.use("/users",users);
 app.use(morgan('dev'))
 
 /** 404 catch --- passes to next handler. */

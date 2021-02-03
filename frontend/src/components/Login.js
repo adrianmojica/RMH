@@ -2,10 +2,11 @@
 import React, { useState } from "react";
 import axios from 'axios';
 import './Login.scss';
+import { useHistory } from 'react-router-dom';
 
 
 function Login() {
-
+  const history = useHistory()
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -38,6 +39,9 @@ function Login() {
     console.log(res);
     //save to local storage
     localStorage.setItem('token', res.data.token);
+    localStorage.setItem('username', res.data.username);
+    history.push('/dashboard');
+    
   }
 
 
@@ -73,7 +77,7 @@ function Login() {
                                     Me</label>
                             </div>
                         </div>
-                        <a href="#"  onClick={handleSubmit}  className="btn btn-primary btn-user btn-block">
+                        <a href="/"  onClick={handleSubmit}  className="btn btn-primary btn-user btn-block">
                             Login
                         </a>
                     </form>

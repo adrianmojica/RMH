@@ -33,7 +33,6 @@ function Register() {
       last_name: "",
       email: "",
       therapist: "DeMarco",
-      email:"",
       password:"",
       is_admin:false
     })
@@ -91,7 +90,6 @@ function Register() {
                                     <input type="password" className="form-control form-control-user"
                                         placeholder="Password" name="password" id="password" onChange={handleChange} value={formData.password}/>
                                 </div>
-                                
                             </div>
                             <a href="login.html" onClick={handleSubmit} className="btn btn-primary btn-user btn-block">
                                 Register Account

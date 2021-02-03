@@ -39,6 +39,8 @@ router.post('/register', async (req, res, next) => {
   }
 });
 
+
+
 router.post('/login', async (req, res, next) => {
   try {
     const { username, password } = req.body;
@@ -54,7 +56,7 @@ router.post('/login', async (req, res, next) => {
     if (user) {
       if (await bcrypt.compare(password, user.password)) {
         const token = jwt.sign({ username }, SECRET_KEY);
-        return res.json({ message: `Logged in!`, token })
+        return res.json({ message: `Logged in!`, token, username: username })
       }
     }
     throw new ExpressError("Invalid username/password", 400);
@@ -63,24 +65,6 @@ router.post('/login', async (req, res, next) => {
   }
 })
 
-router.get('/topsecret',
-  ensureLoggedIn,
-  (req, res, next) => {
-    try {
-      return res.json({ msg: "SIGNED IN! THIS IS TOP SECRET.  I LIKE PURPLE." })
-
-    } catch (e) {
-      return next(new ExpressError("Please login first!", 401))
-    }
-  })
-
-router.get('/private', ensureLoggedIn, (req, res, next) => {
-  return res.json({ msg: `Welcome to my VIP section, ${req.user.username}` })
-})
-
-router.get('/adminhome', ensureAdmin, (req, res, next) => {
-  return res.json({ msg: `ADMIN DASHBOARD! WELCOME ${req.user.username}` })
-})
 
 
 module.exports = router;
