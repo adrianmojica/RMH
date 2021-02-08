@@ -14,14 +14,14 @@ router.get('/', (req, res, next) => {
 })
 
 router.get('/:username', async function(req, res, next){
-    // console.log(req.params.username);
+    console.log(req.params.username);
     let username = req.params.username;
     try {
       if (!req.params.username) {
         throw new ExpressError("something went wrong", 400);
       }
       const results = await db.query(
-        `SELECT username, first_name, last_name, therapist, email 
+        `SELECT id, username, first_name, last_name, therapist, email 
          FROM users
          WHERE username = $1`,
         [username]);

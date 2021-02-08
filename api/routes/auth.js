@@ -11,7 +11,7 @@ const { ensureLoggedIn, ensureAdmin } = require("../middleware/auth");
 
 router.get('/', (req, res, next) => {
   res.send("APP IS WORKING!!!")
-})
+});
 
 router.post('/register', async (req, res, next) => {
   console.log('here in register', req.body);

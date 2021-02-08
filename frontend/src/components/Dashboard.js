@@ -1,11 +1,46 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
+import RMHApi from '../RMHApi';
+import { useAuth } from './context/auth';
+import getFromToken from '../utils';
 import SideNav from './SideNav';
+import Graph from './Graph';
 import "../vendor/sb-admin-2.css";
 import "../vendor/fontawesome-free/css/all.min.css";
 import './Dashboard.scss'
 
 const Dashboard = () => {
+
+    
+    const [formData, setFormData] = useState({
+        id: "",
+        first_name: "",
+        last_name: "",
+        email: "",
+        therapist: "DeMarco",
+        password:"",
+        is_admin: false
+    })
+    const { authToken, setAuthToken } = useAuth();
+    const userId = getFromToken(authToken, 'username');
+  
+    useEffect(() => {
+        
+        const getUser = async () => {
+          try {
+              
+            const res = await RMHApi.getUser(userId);      
+            setFormData(res.user)
+           
+          } catch (err) {
+            
+          }
+        }
+        
+        getUser();
+        
+      }, [userId])
+    
   
   return (
     <>
@@ -20,7 +55,7 @@ const Dashboard = () => {
             <div className="container-fluid mg30">
                 <div className="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 className="h3 mb-0 text-gray-800">Dashboard</h1>
-                    <a href="/" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i className="fas fa-book fa-lg text-white-40"></i> Create New Entry</a>
+                    <a href="/NewEntry" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i className="fas fa-book fa-lg text-white-40"></i> Create New Entry</a>
                 </div>
                 <div className="row">
                     <div className="col-xl-8 col-lg-7">
@@ -29,16 +64,14 @@ const Dashboard = () => {
                             <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                 <h6 className="m-0 font-weight-bold text-primary">Entries Overview</h6>
                                 <div className="dropdown no-arrow">
-                                    <a className="dropdown-toggle" href="/" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i className="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                    </a>
+                                    
                                     
                                 </div>
                             </div>
                             {/* <!-- Card Body --> */}
                             <div className="card-body">
                                 <div className="chart-area"><div className="chartjs-size-monitor"><div className="chartjs-size-monitor-expand"><div className=""></div></div><div className="chartjs-size-monitor-shrink"><div className=""></div></div></div>
-                                    
+                                    <Graph userId={formData.id} />
                                 </div>
                             </div>
                         </div>

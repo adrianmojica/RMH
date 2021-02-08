@@ -52,11 +52,13 @@ class RMHApi {
   }
 
   static async getEntries(data) {
-    const res = await this.request('entries', data);
+    console.log('get Entries from user with id ', data);
+    const res = await this.request('entries', data, 'get');
     return res;
   }
 
   static async registerEntry(data) {
+    console.log('register Entry');
     const res = await this.request('entries', data, 'post');
     return res;
   }

@@ -6,9 +6,30 @@ CREATE TABLE users
   first_name TEXT NOT NULL,
   last_name TEXT NOT NULL,
   email TEXT NOT NULL, 
-  username TEXT NOT NULL PRIMARY KEY,
+  username TEXT NOT NULL,
   therapist TEXT,
-  is_admin TEXT,
-  password TEXT NOT NULL,
+  therapist_id INTEGER REFERENCES therapists (id),
+  is_admin TEXT NULL,
+  password TEXT NOT NULL
 );
 
+CREATE TABLE therapists
+(
+  id SERIAL PRIMARY KEY,
+  first_name TEXT NOT NULL,
+  last_name TEXT NOT NULL,
+  email TEXT NOT NULL, 
+  username TEXT NOT NULL,
+  is_admin TEXT NOT NULL,
+  password TEXT NOT NULL
+);
+
+CREATE TABLE Entries (
+  id SERIAL PRIMARY KEY,
+  patient_id INTEGER REFERENCES users (id),
+  nrs1 INTEGER NOT NULL,
+  nrs2 INTEGER NOT NULL,
+  nrs3 INTEGER NOT NULL,
+  nrs4 INTEGER NOT NULL,
+  nrs5 INTEGER NOT NULL
+);
