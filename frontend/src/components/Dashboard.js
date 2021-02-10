@@ -5,6 +5,7 @@ import { useAuth } from './context/auth';
 import getFromToken from '../utils';
 import SideNav from './SideNav';
 import Graph from './Graph';
+import Appointments from './Appointments';
 import axios from 'axios';
 import "../vendor/sb-admin-2.css";
 import "../vendor/fontawesome-free/css/all.min.css";
@@ -85,7 +86,7 @@ const Dashboard = () => {
                             </div>
                             {/* <!-- Card Body --> */}
                             <div className="card-body">
-                                
+                                <Appointments userId={formData.id}/>
                             </div>
                         </div>
                     </div>

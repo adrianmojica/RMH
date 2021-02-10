@@ -16,18 +16,44 @@ const Graph = (userId) => {
   
   useEffect( () => {
     async function getEntries(){
+      try {
       const res = await axios.get('http://localhost:3000/entries/'+ userId.userId);
       setEntryData(res.data);
       console.log("here",res);
+      Graphing(res);
+      } catch(e) {
+
+      }
     }
     getEntries();
+    
     
   },[userId])
 
 
-  function Graphing(){
- 
-    console.log(entryData)
+  function Graphing(data){
+    let entries = data.data;
+    console.log("****",entries);
+    let nrs1=[];
+    let nrs2=[];
+    let nrs3=[];
+    let nrs4=[];
+    let nrs5=[];
+
+
+    for (let index = 0; index < entries.length; index++) {
+        nrs1.push(entries[index]['nrs1']);
+        nrs2.push(entries[index]['nrs2']);
+        nrs3.push(entries[index]['nrs3']);
+        nrs4.push(entries[index]['nrs4']);
+        nrs5.push(entries[index]['nrs5']);
+    }
+    console.log(nrs1);
+    console.log(nrs2);
+    console.log(nrs3);
+    console.log(nrs4);
+    console.log(nrs5);
+
 
     let ctx = document.getElementById('myChart');
     var data = {
@@ -35,7 +61,7 @@ const Graph = (userId) => {
       datasets: [
         {
           label: "NRS1",
-          data: [10, 50, 25, 70, 40],
+          data: nrs1,
           backgroundColor: "blue",
           borderColor: "lightblue",
           fill: false,
@@ -44,7 +70,7 @@ const Graph = (userId) => {
         },
         {
           label: "NRS2",
-          data: [20, 35, 40, 60, 50],
+          data: nrs2,
           backgroundColor: "green",
           borderColor: "lightgreen",
           fill: false,
@@ -53,7 +79,7 @@ const Graph = (userId) => {
         },
         {
           label: "NRS3",
-          data: [20, 35, 40, 60, 50],
+          data: nrs3,
           backgroundColor: "yellow",
           borderColor: "yellow",
           fill: false,
@@ -62,7 +88,7 @@ const Graph = (userId) => {
         },
         {
           label: "NRS4",
-          data: [20, 35, 40, 60, 50],
+          data: nrs4, 
           backgroundColor: "red",
           borderColor: "red",
           fill: false,
@@ -71,7 +97,7 @@ const Graph = (userId) => {
         },
         {
           label: "NRS5",
-          data: [20, 35, 40, 60, 50],
+          data: nrs5,
           backgroundColor: "purple",
           borderColor: "purple",
           fill: false,
@@ -109,11 +135,11 @@ const Graph = (userId) => {
     });
   }
 
-
+  
 
   return (
     <div>
-      {/* {Graphing()} */}
+      
       <canvas id="myChart"></canvas>
     </div>
   )

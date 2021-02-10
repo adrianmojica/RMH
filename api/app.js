@@ -7,6 +7,8 @@ app.use(cors());
 const routes = require("./routes/auth");
 const users = require("./routes/users");
 const entries = require("./routes/entries");
+const appointments = require("./routes/appointments");
+
 
 
 const ExpressError = require("./expressError");
@@ -19,6 +21,8 @@ app.use(authenticateJWT);
 app.use("/", routes);
 app.use("/users",users);
 app.use("/entries",entries);
+app.use("/appointments",appointments);
+
 
 app.use(morgan('dev'))
 

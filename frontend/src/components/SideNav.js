@@ -4,11 +4,11 @@ import React from "react";
 function SideNav() {
   return (
     <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-      <a className="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a className="sidebar-brand d-flex align-items-center justify-content-center" href="/">
           <div className="sidebar-brand-text mx-3">Remote Mental Health</div>
       </a>
       <li className="nav-item active">
-        <a className="nav-link" href="index.html">
+        <a className="nav-link" href="/dashboard">
           <i className="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
         </a>
@@ -21,12 +21,12 @@ function SideNav() {
           <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar" >
               <div className="bg-white py-2 collapse-inner rounded">
                   <h6 className="collapse-header">Edit Profile</h6>
-                  <a className="collapse-item" href="cards.html">Logout</a>
+                  <a className="collapse-item" href="/logout">Logout</a>
               </div>
           </div>
       </li>
       <li className="nav-item">
-          <a className="nav-link collapsed" href="/" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="false" aria-controls="collapseUtilities">
+          <a className="nav-link collapsed" href="/NewEntry" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="false" aria-controls="collapseUtilities">
               <i className="fas fa-fw fa-wrench"></i>
               <span>Entries</span>
           </a>
