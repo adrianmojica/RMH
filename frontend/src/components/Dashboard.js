@@ -5,6 +5,7 @@ import { useAuth } from './context/auth';
 import getFromToken from '../utils';
 import SideNav from './SideNav';
 import Graph from './Graph';
+import axios from 'axios';
 import "../vendor/sb-admin-2.css";
 import "../vendor/fontawesome-free/css/all.min.css";
 import './Dashboard.scss'
@@ -31,17 +32,16 @@ const Dashboard = () => {
               
             const res = await RMHApi.getUser(userId);      
             setFormData(res.user)
-           
+            console.log(res);
           } catch (err) {
             
           }
         }
-        
         getUser();
-        
       }, [userId])
     
-  
+  console.log("here",formData);
+
   return (
     <>
       <div id="wrapper">
