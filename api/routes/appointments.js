@@ -21,18 +21,18 @@ var acuity = Acuity.basic({
 
 
 
-router.get('/:email', async function(req, res, next) {
+router.get('/:email', (req, res, next) => {
   // https://acuityscheduling.com/api/v1/appointments?email=
   console.log(req.params);
   let email = req.params.email
-  
+  let apt;
   // res.send("appointments IS WORKING!!!")
-  const results =  acuity.request('/appointments?email='+email, function (err, res, appointments) {
+  apt = acuity.request('/appointments?email='+email, function (err, response, appointments) {
     if (err) return console.error(err);
-    return appointments;
+    apt = appointments;
+    console.log(appointments)
+    res.send(appointments);
   });
-  console.log(results);
-  return res.json(results);
 })
 
 
