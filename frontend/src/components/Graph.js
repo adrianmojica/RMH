@@ -39,6 +39,12 @@ const Graph = (userId) => {
     let nrs3=[];
     let nrs4=[];
     let nrs5=[];
+    let labels =[];
+    for (let index = 1; index <= entries.length; index++) {
+      const element = "Session"+index;
+      labels.push(element);
+    }
+    console.log(labels);
 
 
     for (let index = 0; index < entries.length; index++) {
@@ -57,7 +63,7 @@ const Graph = (userId) => {
 
     let ctx = document.getElementById('myChart');
     var data = {
-      labels: ["match1", "match2", "match3", "match4", "match5"],
+      labels: labels,
       datasets: [
         {
           label: "NRS1",
