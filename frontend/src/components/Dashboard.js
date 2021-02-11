@@ -86,7 +86,7 @@ const Dashboard = () => {
                             </div>
                             {/* <!-- Card Body --> */}
                             <div className="card-body">
-                                <Appointments userId={formData.id}/>
+                                <Appointments userEmail={formData.email}/>
                             </div>
                         </div>
                     </div>
