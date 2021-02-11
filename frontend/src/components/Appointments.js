@@ -10,7 +10,7 @@ import './Graph.scss'
 
 const Appointments = (email) => {
   let userEmail= "lornebatman@gmail.com";
-  console.log("this",email)
+  // console.log("this",email)
   const [appointment, setAppointment] = useState([]);
   const [notice, setNotice] = useState("No Upcoming Appointments");
   
@@ -19,10 +19,11 @@ const Appointments = (email) => {
     async function getEntries(){
       try {
       const res = await axios.get('http://localhost:3000/appointments/'+ userEmail); 
-      //change to right email variable when possible. 
-      setAppointment(res.data[0]);
-      console.log("here",res);
-      checkAppointments(res.data[0]);
+      //change to right email variable when possible.
+        if(res.data){
+          setAppointment(res.data[0]);
+          checkAppointments(res.data[0]);
+        } 
       } catch(e) {
 
       }
@@ -35,8 +36,6 @@ const Appointments = (email) => {
 
   function checkAppointments(app){
     if(app !== null){
-      
-      console.log("++++++++++++++",app);
       let appDate= app.date;
       let time = app.time;
       let timezone = app.timezone;
@@ -58,7 +57,6 @@ const Appointments = (email) => {
 
 function startMeeting(evt){
   evt.preventDefault();
-  // console.log("here", appointment.firstName);
   let url = "https://meet.jit.si/"+appointment.firstName+"_"+appointment.lastName;
   window.open(url, '_blank');
 }

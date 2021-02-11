@@ -10,17 +10,17 @@ import './Graph.scss'
 
 const Graph = (userId) => {
   
-  console.log(userId)
   const [entryData, setEntryData] = useState();
 
   
   useEffect( () => {
     async function getEntries(){
       try {
-      const res = await axios.get('http://localhost:3000/entries/'+ userId.userId);
-      setEntryData(res.data);
-      console.log("here",res);
-      Graphing(res);
+        if(userId.userId){
+          const res = await axios.get('http://localhost:3000/entries/'+ userId.userId);
+          setEntryData(res.data);
+          Graphing(res);
+        }
       } catch(e) {
 
       }
@@ -33,7 +33,6 @@ const Graph = (userId) => {
 
   function Graphing(data){
     let entries = data.data;
-    console.log("****",entries);
     let nrs1=[];
     let nrs2=[];
     let nrs3=[];
@@ -44,9 +43,7 @@ const Graph = (userId) => {
       const element = "Session"+index;
       labels.push(element);
     }
-    console.log(labels);
-
-
+   
     for (let index = 0; index < entries.length; index++) {
         nrs1.push(entries[index]['nrs1']);
         nrs2.push(entries[index]['nrs2']);
@@ -54,11 +51,6 @@ const Graph = (userId) => {
         nrs4.push(entries[index]['nrs4']);
         nrs5.push(entries[index]['nrs5']);
     }
-    console.log(nrs1);
-    console.log(nrs2);
-    console.log(nrs3);
-    console.log(nrs4);
-    console.log(nrs5);
 
 
     let ctx = document.getElementById('myChart');
@@ -141,7 +133,6 @@ const Graph = (userId) => {
     });
   }
 
-  
 
   return (
     <div>

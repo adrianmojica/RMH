@@ -33,7 +33,7 @@ const Dashboard = () => {
               
             const res = await RMHApi.getUser(userId);      
             setFormData(res.user)
-            console.log(res);
+            
           } catch (err) {
             
           }
@@ -41,8 +41,6 @@ const Dashboard = () => {
         getUser();
       }, [userId])
     
-  console.log("here",formData);
-
   return (
     <>
       <div id="wrapper">
