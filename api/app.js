@@ -8,6 +8,8 @@ const routes = require("./routes/auth");
 const users = require("./routes/users");
 const entries = require("./routes/entries");
 const appointments = require("./routes/appointments");
+const therapists = require("./routes/therapists");
+
 
 
 
@@ -22,6 +24,8 @@ app.use("/", routes);
 app.use("/users",users);
 app.use("/entries",entries);
 app.use("/appointments",appointments);
+app.use("/therapists",therapists);
+
 
 
 app.use(morgan('dev'))

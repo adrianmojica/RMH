@@ -4,6 +4,8 @@ import RMHApi from '../RMHApi';
 import { useAuth } from './context/auth';
 import getFromToken from '../utils';
 import SideNav from './SideNav';
+import axios from 'axios';
+import './Profile.scss'
 
 const Profile = () => {
   const [formData, setFormData] = useState({
@@ -15,6 +17,8 @@ const Profile = () => {
       is_admin: false
   })
   const { authToken, setAuthToken } = useAuth();
+  const [ therapists , setTherapists ] =useState();
+
 
  
   const userId = getFromToken(authToken, 'username');
@@ -29,8 +33,23 @@ const Profile = () => {
         
       }
     }
-    getUser()
-  }, [userId])
+
+    const getTherapistOptions = async () => {
+     
+      try{
+        const res = await axios.get('http://localhost:3000/therapists/options/');
+       
+        setTherapists(res.data.therapists);
+      }catch(e){
+
+      }
+    }
+    getUser();
+    getTherapistOptions();
+    
+  }, [userId]);
+
+
 
   const handleChange = e => {
     const { name, value } = e.target
@@ -41,10 +60,8 @@ const Profile = () => {
   }
 
   function handleSubmit(event){
-    console.log("here");
     event.preventDefault();
     setFormData(formData);
-    console.log(formData);
     updateUser();
   }
   
@@ -59,11 +76,25 @@ const Profile = () => {
       email: formData.email,
       is_admin: false
     };
-    const res = await RMHApi.updateUser(userId, body);  
-    console.log(res);   
+    const res = await RMHApi.updateUser(userId, body);   
   }
 
+  function generateOptions(therapists){
+    if(therapists){
+        let options = therapists.map((item, i) => {
+      return (
+      	<option key={i} value={item.value}>{item.value}</option>
+      )
+      });
+      return options;
+    }   
+  }
+  
+
+
+
   return (
+    
     <>
       <div id="wrapper">
         {/* SIDENAV */}
@@ -88,17 +119,23 @@ const Profile = () => {
                                   <form>
                                     <div className="form-group row">
                                       <div className="col-sm-6 mb-3 mb-sm-0">
+                                        <label className="col-sm-12 profile_field" htmlFor="first_name">First Name</label>
                                         <input type="text" className="form-control form-control-user" placeholder="First Name" name="first_name" id="first_name" onChange={handleChange} value={formData.first_name}/>
                                       </div>
                                       <div className="col-sm-6">
+                                        <label className="col-sm-12 profile_field" htmlFor="last_name">Last Name</label>
                                         <input type="text" className="form-control form-control-user" placeholder="Last Name" name="last_name" id="last_name" onChange={handleChange} value={formData.last_name}/>
                                       </div>
                                     </div>
                                     <div className="form-group">
+                                      <label className="col-sm-12 profile_field" htmlFor="email">Email</label>
                                       <input type="email" className="form-control form-control-user"  placeholder="Email Address" name="email" id="email" onChange={handleChange} value={formData.email}/>
                                     </div>
                                     <div className="form-group">
-                                        <input type="text" className="form-control form-control-user" placeholder="therapist" name="therapist" id="therapist" onChange={handleChange} value={formData.therapist}/>
+                                      <label className="col-sm-12 profile_field" htmlFor="therapist">Therapist</label>
+                                        <select className="form-control form-control-user" name="therapist" id="therapist" value={formData.therapist} onChange={handleChange}>
+                                          {generateOptions(therapists)}
+                                        </select>
                                     </div>
                                     <div className="form-group row">
                                       <div className="col-sm-12 mb-3 mb-sm-0">
