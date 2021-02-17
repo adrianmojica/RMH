@@ -5,7 +5,7 @@ import './Login.scss';
 import { useHistory } from 'react-router-dom';
 
 
-function Login() {
+function TherapistLogin() {
   const history = useHistory()
   const [formData, setFormData] = useState({
     username: "",
@@ -32,20 +32,22 @@ function Login() {
     })
   }
 
+
   async function loginUser(){
     let body = { username: formData.username,
                 password: formData.password};
-    let res = await axios.post('http://localhost:3000/login', body);
+    let res = await axios.post('http://localhost:3000/logintherapist', body);
     console.log(res);
     //save to local storage
     localStorage.setItem('token', res.data.token);
     localStorage.setItem('username', res.data.username);
     if(res.data.message === "Logged in!" || res.status == 200){
       if(res.data.token) {
-        history.push('/dashboard');
+        history.push('/HQdashboard');
       }
     }
   }
+
 
 
   return (
@@ -97,4 +99,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default TherapistLogin;

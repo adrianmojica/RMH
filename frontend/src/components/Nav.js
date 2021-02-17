@@ -32,6 +32,16 @@ function Nav() {
               </Link>
             </li>
           </>
+  } else {
+    nav = <>
+              <li className="nav-item"><Link className="nav-link" to="/">
+              <i className="fas fa-home"></i>
+                Home
+                </Link>
+              </li>
+              <li className="nav-item"><Link className="nav-link" to="/register">Register</Link></li>
+              <li className="nav-item"><Link className="nav-link" to="/login">Login</Link></li>
+            </>;
   }
 
   return (

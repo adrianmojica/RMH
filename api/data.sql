@@ -33,3 +33,7 @@ CREATE TABLE Entries (
   nrs4 INTEGER NOT NULL,
   nrs5 INTEGER NOT NULL
 );
+
+
+INSERT INTO therapists (first_name, last_name, email, username, password, is_admin) VALUES
+('Melanie', 'Downs', 'melanie@rmh.net', 'melanie@rmh.net', '12345', true);

@@ -39,6 +39,32 @@ router.post('/register', async (req, res, next) => {
   }
 });
 
+router.post('/registertherapist', async (req, res, next) => {
+  console.log('here in register therapst', req.body);
+  try {
+    const { username, password, first_name, last_name, email, is_admin } = req.body;
+    if (!username || !password) {
+      throw new ExpressError("Username and password required", 400);
+    }
+    // hash password
+    const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR);
+    
+    // save to db
+    const results = await db.query(`
+      INSERT INTO therapists (username, password, first_name, last_name, email, is_admin)
+      VALUES ($1, $2, $3, $4, $5, $6)
+      RETURNING username`,
+      [username, hashedPassword, first_name, last_name, email, is_admin]);
+    console.log(results);
+    return res.json(results.rows[0]);
+  } catch (e) {
+    if (e.code === '23505') {
+      return next(new ExpressError("Username taken. Please pick another!", 400));
+    }
+    return next(e)
+  }
+});
+
 
 
 router.post('/login', async (req, res, next) => {
@@ -50,6 +76,30 @@ router.post('/login', async (req, res, next) => {
     const results = await db.query(
       `SELECT username, password 
        FROM users
+       WHERE username = $1`,
+      [username]);
+    const user = results.rows[0];
+    if (user) {
+      if (await bcrypt.compare(password, user.password)) {
+        const token = jwt.sign({ username }, SECRET_KEY);
+        return res.json({ message: `Logged in!`, token, username: username })
+      }
+    }
+    throw new ExpressError("Invalid username/password", 400);
+  } catch (e) {
+    return next(e);
+  }
+})
+
+router.post('/logintherapist', async (req, res, next) => {
+  try {
+    const { username, password } = req.body;
+    if (!username || !password) {
+      throw new ExpressError("Username and password required", 400);
+    }
+    const results = await db.query(
+      `SELECT username, password 
+       FROM therapists
        WHERE username = $1`,
       [username]);
     const user = results.rows[0];

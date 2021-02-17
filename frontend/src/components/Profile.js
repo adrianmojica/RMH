@@ -35,10 +35,10 @@ const Profile = () => {
     }
 
     const getTherapistOptions = async () => {
-     
+     console.log('hereee')
       try{
         const res = await axios.get('http://localhost:3000/therapists/options/');
-       
+        console.log(res);
         setTherapists(res.data.therapists);
       }catch(e){
 
@@ -80,12 +80,15 @@ const Profile = () => {
   }
 
   function generateOptions(therapists){
+    console.log('here', therapists);
     if(therapists){
+      
         let options = therapists.map((item, i) => {
       return (
       	<option key={i} value={item.value}>{item.value}</option>
       )
       });
+      console.log(options);
       return options;
     }   
   }

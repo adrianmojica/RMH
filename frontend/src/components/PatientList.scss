@@ -1,0 +1,16 @@
+.patient-list {
+    list-style: none;
+    display: inline-flex;
+    padding-left: 0px;
+    flex-wrap: wrap;
+    max-height: 518px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    li{
+        max-width: 2000px;
+        .card {
+            width: 200px;
+            margin: 5px;
+        }
+    }
+}

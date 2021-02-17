@@ -32,6 +32,24 @@ router.get('/:username', async function(req, res, next){
     }
 });
 
+
+//get users by therapist
+router.post('/patients', async (req, res, next) =>{
+  console.log('retreive patients with therapist ->', req.body);
+  try {
+    const therapist = req.body.fullName;
+    const results = await db.query(`
+      SELECT id, first_name, last_name FROM users
+      WHERE therapist = $1`,
+      [therapist]);
+    console.log(results);
+    return res.json(results.rows);
+  } catch (e) {
+    return next(e)
+  }
+})
+
+
 router.patch('/:username', async function(req, res, next) {
   console.log("Update",req.body);
   try {

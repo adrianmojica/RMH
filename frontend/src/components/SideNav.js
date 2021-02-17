@@ -1,7 +1,28 @@
 import React from "react";
+import { useHistory } from 'react-router-dom';
+
+
+
 
 
 function SideNav() {
+
+  const history = useHistory();
+
+
+  function handleLogOut(evt){
+    evt.preventDefault();
+    console.log("Loging OUT");
+    localStorage.removeItem("username");
+    localStorage.removeItem("token");
+    history.push('/');
+    
+  }
+
+  
+
+
+
   return (
     <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
       <a className="sidebar-brand d-flex align-items-center justify-content-center" href="/">
@@ -52,6 +73,12 @@ function SideNav() {
                   <a className="collapse-item" href="/">Remote Mental Health Main Site</a>
               </div>
           </div>
+      </li>
+      <li className="nav-item">
+            <a className="nav-link" href="/" data-target="#collapsePages" onClick={handleLogOut}>
+              <i className="fas fa-sign-out-alt"></i>
+              <span>Log Out</span>
+          </a>
       </li>
   </ul>
   );
