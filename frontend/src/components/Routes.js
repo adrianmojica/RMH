@@ -11,6 +11,7 @@ import RegisterTherapist from "./TherapistRegister";
 import Login from "./Login";
 import TherapistLogin from "./TherapistLogin"
 import NewEntry from "./NewEntry";
+import PatientDetail from "./PatientDetail"
 import { AuthContext } from './context/auth';
 
 function Routes() {
@@ -38,6 +39,8 @@ function Routes() {
           <PrivateRoute exact path="/profile" component={Profile} />
           <PrivateRoute exact path="/dashboard" component={Dashboard} />
           <PrivateRoute exact path="/hq" component={HQDashboard} />
+          <PrivateRoute exact path="/hq" component={HQDashboard} />
+          <PrivateRoute exact path="/patients/:id" component={PatientDetail} />
           <PrivateRoute exact path="/newEntry" component={NewEntry} />
           <Route component={NotFound} />
         </Switch>

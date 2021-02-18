@@ -12,24 +12,14 @@ const PatientsList = (patients) => {
   console.log(patients);
   
 
-  
-/*
-let options = therapists.map((item, i) => {
-      return (
-      	<option key={i} value={item.value}>{item.value}</option>
-      )
-      });
-*/
-
-
 
   return (
       <ul className="patient-list">
-        {/* {patients.map((item,i) =>{
+        {patients.patients.map((item,i) =>{
           return (
-            <Patient key={i} id={item.id} name={item.first_name} last_name= />
+            <Patient key={i} id={item.id} name={item.first_name} last_name={item.last_name} />
           )
-        })} */}
+        })}
       </ul>
   )
 }

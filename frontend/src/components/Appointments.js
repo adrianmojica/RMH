@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
-import RMHApi from '../RMHApi';
-import { useAuth } from './context/auth';
-import getFromToken from '../utils';
+// import { Redirect } from 'react-router-dom';
+// import RMHApi from '../RMHApi';
+// import { useAuth } from './context/auth';
+// import getFromToken from '../utils';
 import axios from 'axios';
-import Chart from 'chart.js';
-import './Graph.scss'
+// import Chart from 'chart.js';
+// import './Graph.scss'
 
 
 const Appointments = (email) => {
@@ -31,7 +31,7 @@ const Appointments = (email) => {
     getEntries();
     
     
-  },[email])
+  },[userEmail])
 
 
   function checkAppointments(app){
@@ -39,7 +39,7 @@ const Appointments = (email) => {
       let appDate= app.date;
       let time = app.time;
       let timezone = app.timezone;
-      let therapist = app.calendar;
+      // let therapist = app.calendar;
       let location = app.location;
       let message = <div className="appointment">
                       <b>Date:</b> <span className="badge badge-success">{appDate} </span> <br></br>
@@ -63,9 +63,10 @@ function startMeeting(evt){
 
   return (
     <div>
-     <h5>Upcoming Appointment</h5>
+     <hr></hr>
+     <h6 className="centered">Patient's Upcoming Appointment</h6>
      <div>{notice}</div>
-     <button onClick={startMeeting} className="btn btn-success">Start Your Meeting</button>
+     <button onClick={startMeeting} className="btn btn-success col-xl-12 col-lg-12"><i className="fas fa-video"></i> Meeting Link</button>
      
      
     </div>

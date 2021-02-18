@@ -14,7 +14,7 @@ router.get('/', (req, res, next) => {
 })
 
 router.get('/:username', async function(req, res, next){
-    console.log(req.params.username);
+    console.log(req.params.username,"************");
     let username = req.params.username;
     try {
       if (!req.params.username) {
@@ -26,12 +26,33 @@ router.get('/:username', async function(req, res, next){
          WHERE username = $1`,
         [username]);
       const user = results.rows[0];
+      console.log(user);
       return res.json({ message: `got user!`, user })
     } catch(e) {
       return next(e);
     }
 });
 
+// get user by id;
+router.get('/patient/:id', async function(req, res, next){
+  console.log(req.params.id,"************");
+  let id = req.params.id;
+  try {
+    if (!req.params.id) {
+      throw new ExpressError("something went wrong", 400);
+    }
+    const results = await db.query(
+      `SELECT id, username, first_name, last_name, therapist, email 
+       FROM users
+       WHERE id = $1`,
+      [id]);
+    const user = results.rows;
+    console.log(user);
+    return res.json({ message: `got user!`, user })
+  } catch(e) {
+    return next(e);
+  }
+});
 
 //get users by therapist
 router.post('/patients', async (req, res, next) =>{

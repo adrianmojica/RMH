@@ -26,13 +26,41 @@ router.get('/:email', (req, res, next) => {
   let cYear = currentDate.getFullYear()
  
   let date = cDay+"-"+cMonth+"-"+cYear;
-  // res.send("appointments IS WORKING!!!")
   apt = acuity.request('/appointments?email='+email+'&minDate='+date+"&direction=ASC", function (err, response, appointments) {
     if (err) return console.error(err);
     apt = appointments;
     res.send(appointments);
   });
 })
+
+
+
+//get Appointments by therapist
+router.get('/', (req, res, next) => {
+  // let therapist = req.params.therapist
+  let therapist = "Praia"
+  let apt;
+  let currentDate = new Date();
+  let cDay = currentDate.getDate();
+  let cMonth = currentDate.getMonth() + 1
+  let cYear = currentDate.getFullYear()
+  let date = cDay+"-"+cMonth+"-"+cYear;
+  
+  apt = acuity.request('/appointments?&minDate='+date+"&direction=ASC", function (err, response, appointments) {
+    if (err) return console.error(err);
+    apt = appointments;
+    var filtered = [];
+    for (var i = 0; i < appointments.length; i++) {
+        if (appointments[i].calendar.indexOf(therapist) >= 0) {
+            filtered.push(appointments[i]);
+        }
+    }
+    res.send(filtered);
+  });
+})
+
+
+
 
 
 

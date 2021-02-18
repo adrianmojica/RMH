@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 import RMHApi from '../RMHApi';
 import { useAuth } from './context/auth';
 import getFromToken from '../utils';
@@ -11,10 +12,13 @@ import axios from 'axios';
 import "../vendor/sb-admin-2.css";
 import "../vendor/fontawesome-free/css/all.min.css";
 import './HQDashboard.scss'
+import './PatientDetail.scss'
 
-const HQDashboard = () => {
+const PatientDetail = (props) => {
+    const {id} = useParams();
 
-    
+    console.log("Detail for id=",id);
+
     const [formData, setFormData] = useState({
         id: "",
         first_name: "",
@@ -24,46 +28,24 @@ const HQDashboard = () => {
         password:"",
         is_admin: false
     })
-    const { authToken, setAuthToken } = useAuth();
-    const userId = getFromToken(authToken, 'username');
-
-    const [patients, setPatients] = useState([]);
+    // const { authToken, setAuthToken } = useAuth();
+    // const userId = getFromToken(authToken, 'username');
   
     useEffect(() => {
-        
         const getUser = async () => {
-          try {
-              
-            const res = await RMHApi.getTherapist(userId);      
-            setFormData(res.user)
-            renderPatients(res.user);
-            
+          try {  
+            console.log(id,"here");
+            const res = await RMHApi.getUserById(id);      
+            setFormData(res.user[0])
+            console.log(res);
             
           } catch (err) {
             
           }
         }
         getUser();
-      }, [userId])
+      }, [id])
     
-  
-    async function renderPatients(therapist){
-      console.log(therapist);
-      if(therapist){
-        let fullName = therapist.first_name+" "+therapist.last_name;
-        console.log(fullName)
-        try{
-          // TODO fix hardcoded therapist
-          const res = await axios.post('http://localhost:3000/users/patients',{fullName});
-          setPatients(res.data);
-          console.log("******",res);
-        }catch(e){
-  
-        }
-      }
-      
-    }
-      
   return (
     <>
       <div id="wrapper">
@@ -76,20 +58,24 @@ const HQDashboard = () => {
             
             <div className="container-fluid mg30">
                 <div className="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 className="h3 mb-0 text-gray-800">Therapist Dashboard</h1>
-                    {/* <a href="/NewEntry" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i className="fas fa-book fa-lg text-white-40"></i> Create New Entry</a> */}
+                    <h1 className="h3 mb-0 text-gray-800">Dashboard</h1>
                 </div>
                 <div className="row">
-                    <div className="col-xl-8 col-lg-7">
+                    <div className="col-xl-8 col-lg-8">
                         <div className="card shadow mb-4">
                             {/* <!-- Card Header - Dropdown --> */}
                             <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h6 className="m-0 font-weight-bold text-primary">Patients</h6>
-    
+                                <h6 className="m-0 font-weight-bold text-primary">Patient's Entries Overview</h6>
+                                <div className="dropdown no-arrow">
+                                    
+                                    
+                                </div>
                             </div>
                             {/* <!-- Card Body --> */}
-                            <div className="card-body patients-card-container">
-                                  <PatientsList patients={patients}/>
+                            <div className="card-body">
+                                <div className="chart-area"><div className="chartjs-size-monitor"><div className="chartjs-size-monitor-expand"><div className=""></div></div><div className="chartjs-size-monitor-shrink"><div className=""></div></div></div>
+                                    <Graph userId={formData.id} />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -98,11 +84,17 @@ const HQDashboard = () => {
                         <div className="card shadow mb-4">
                             {/* <!-- Card Header - Dropdown --> */}
                             <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h6 className="m-0 font-weight-bold text-primary">Appointments</h6>
+                                <h6 className="m-0 font-weight-bold text-primary">Patient's Information</h6>
                             </div>
                             {/* <!-- Card Body --> */}
                             <div className="card-body">
-                                {/* <Appointments userEmail={formData.email}/> */}
+                                <div className="patients-info">
+                                    <b>Name: </b>{formData.first_name} <br></br>
+                                    <b>Last Name: </b> {formData.last_name} <br></br>
+                                    <b>Therapist: </b> {formData.therapist} <br></br>
+                                    <b>email: </b>{formData.email} <br></br>
+                                    <Appointments userEmail={formData.email}/>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -115,4 +107,4 @@ const HQDashboard = () => {
   )
 }
 
-export default HQDashboard;
+export default PatientDetail;

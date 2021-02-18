@@ -30,6 +30,11 @@ class RMHApi {
     return res;
   }
 
+  static async getUserById(id) {
+    const res = await this.request(`users/patient/${id}`);
+    return res;
+  }
+
   static async getTherapist(id) {
     const res = await this.request(`therapists/${id}`);
     return res;
