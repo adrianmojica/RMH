@@ -3,11 +3,13 @@ import { Redirect } from 'react-router-dom';
 import RMHApi from '../RMHApi';
 import { useAuth } from './context/auth';
 import getFromToken from '../utils';
-import SideNav from './SideNav';
+import SideNavTherapist from './SideNavTherapist';
 import axios from 'axios';
 import './Profile.scss'
 
-const Profile = () => {
+const TherapistProfile = (props) => {
+
+
   const [formData, setFormData] = useState({
       first_name: "",
       last_name: "",
@@ -25,27 +27,19 @@ const Profile = () => {
 
   useEffect(() => {
     const getUser = async () => {
+      let mounted = true;
       try {
-        const res = await RMHApi.getUser(userId); 
-        setFormData(res.user[0]);
+        const res = await RMHApi.getTherapist(userId);      //therapist not user
+        if (mounted) {
+          setFormData(res.user)
+        }
        
       } catch (err) {
         
       }
     }
 
-    const getTherapistOptions = async () => {
-     console.log('hereee')
-      try{
-        const res = await axios.get('http://localhost:3000/therapists/options/');
-        console.log(res);
-        setTherapists(res.data.therapists);
-      }catch(e){
-
-      }
-    }
     getUser();
-    getTherapistOptions();
     
   }, [userId]);
 
@@ -62,36 +56,21 @@ const Profile = () => {
   function handleSubmit(event){
     event.preventDefault();
     setFormData(formData);
-    updateUser();
+    updateTherapist();
   }
   
 
-  async function updateUser(){
+  async function updateTherapist(){
     let body = { 
       username: formData.email,
       password: formData.password,
       first_name: formData.first_name,
       last_name: formData.last_name,
-      therapist: formData.therapist,
       email: formData.email,
       is_admin: false
     };
-    const res = await RMHApi.updateUser(userId, body);   
+    const res = await RMHApi.updateTherapist(userId, body);   
   }
-
-  function generateOptions(therapists){
-    console.log('here', therapists);
-    if(therapists){
-      
-        let options = therapists.map((item, i) => {
-      return (
-      	<option key={i} value={item.value}>{item.value}</option>
-      )
-      });
-      return options;
-    }   
-  }
-  
 
 
 
@@ -100,7 +79,7 @@ const Profile = () => {
     <>
       <div id="wrapper">
         {/* SIDENAV */}
-        <SideNav/>
+        <SideNavTherapist/>
         
         {/* CONTENT */}
           <div id="content-wrapper" className="d-flex flex-column">
@@ -122,7 +101,7 @@ const Profile = () => {
                                     <div className="form-group row">
                                       <div className="col-sm-6 mb-3 mb-sm-0">
                                         <label className="col-sm-12 profile_field" htmlFor="first_name">First Name</label>
-                                        <input type="text" className="form-control form-control-user" placeholder="First Name" name="first_name" id="first_name" onChange={handleChange} value={formData.first_name}/>
+                                        <input type="text" className="form-control form-control-user" placeholder="First Name" name="first_name" id="first_name" onChange={handleChange} value={formData.first_name} />
                                       </div>
                                       <div className="col-sm-6">
                                         <label className="col-sm-12 profile_field" htmlFor="last_name">Last Name</label>
@@ -132,17 +111,6 @@ const Profile = () => {
                                     <div className="form-group">
                                       <label className="col-sm-12 profile_field" htmlFor="email">Email</label>
                                       <input type="email" className="form-control form-control-user"  placeholder="Email Address" name="email" id="email" onChange={handleChange} value={formData.email}/>
-                                    </div>
-                                    <div className="form-group">
-                                      <label className="col-sm-12 profile_field" htmlFor="therapist">Therapist</label>
-                                        <select className="form-control form-control-user" name="therapist" id="therapist" value={formData.therapist} onChange={handleChange}>
-                                          {generateOptions(therapists)}
-                                        </select>
-                                    </div>
-                                    <div className="form-group row">
-                                      <div className="col-sm-12 mb-3 mb-sm-0">
-                                        {/* <input type="password" className="form-control form-control-user" placeholder="Password" name="password" id="password" onChange={handleChange} value={formData.password}/> */}
-                                      </div>
                                     </div>
                                     <div className="form-group row">
                                       <div className="col-sm-12 mb-3 mb-sm-0">
@@ -165,4 +133,4 @@ const Profile = () => {
   )
 }
 
-export default Profile;
+export default TherapistProfile;

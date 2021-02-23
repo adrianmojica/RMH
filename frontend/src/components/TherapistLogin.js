@@ -41,9 +41,9 @@ function TherapistLogin() {
     //save to local storage
     localStorage.setItem('token', res.data.token);
     localStorage.setItem('username', res.data.username);
-    if(res.data.message === "Logged in!" || res.status == 200){
+    if(res.data.message === "Logged in!" || res.status === 200){
       if(res.data.token) {
-        history.push('/HQdashboard');
+        history.push('/hq');
       }
     }
   }
@@ -75,13 +75,13 @@ function TherapistLogin() {
                             <input type="password" className="form-control form-control-user"
                                 id="exampleInputPassword" placeholder="Password" name="password" id="password" onChange={handleChange} value={formData.password}/>
                         </div>
-                        <div className="form-group">
+                        {/* <div className="form-group">
                             <div className="custom-control custom-checkbox small">
                                 <input type="checkbox" className="custom-control-input" id="customCheck"/>
                                 <label className="custom-control-label" htmlFor="customCheck">Remember
                                     Me</label>
                             </div>
-                        </div>
+                        </div> */}
                         <a href="/"  onClick={handleSubmit}  className="btn btn-primary btn-user btn-block">
                             Login
                         </a>

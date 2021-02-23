@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import RMHApi from '../RMHApi';
 import { useAuth } from './context/auth';
 import getFromToken from '../utils';
-import SideNav from './SideNav';
+import SideNavTherapist from './SideNavTherapist';
 import Graph from './Graph';
 import PatientsList from './PatientsList';
 import Appointments from './Appointments';
@@ -15,6 +15,7 @@ import './HQDashboard.scss'
 import './PatientDetail.scss'
 
 const PatientDetail = (props) => {
+    console.log(props);
     const {id} = useParams();
 
     console.log("Detail for id=",id);
@@ -50,7 +51,7 @@ const PatientDetail = (props) => {
     <>
       <div id="wrapper">
         {/* SIDENAV */}
-        <SideNav/>
+        <SideNavTherapist/>
         
         {/* CONTENT */}
         <div id="content-wrapper" className="d-flex flex-column">

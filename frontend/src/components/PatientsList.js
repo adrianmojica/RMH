@@ -9,7 +9,7 @@ import './PatientList.scss'
 
 
 const PatientsList = (patients) => {
-  console.log(patients);
+  // console.log(patients);
   
 
 

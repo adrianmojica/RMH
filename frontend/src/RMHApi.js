@@ -25,7 +25,7 @@ class RMHApi {
   }
   
   static async getUser(id) {
-    
+    console.log("Get user with",id);
     const res = await this.request(`users/${id}`);
     return res;
   }
@@ -48,6 +48,12 @@ class RMHApi {
   static async updateUser(id, data) {
     console.log(id,'HERE IT IS UPDATE', id , data);
     const res = await this.request(`users/${id}`, data, 'patch');
+    return res;
+  }
+
+  static async updateTherapist(id, data) {
+    console.log(id,'HERE IT IS UPDATE', id , data);
+    const res = await this.request(`therapists/${id}`, data, 'patch');
     return res;
   }
 

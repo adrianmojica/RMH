@@ -3,10 +3,10 @@ import { Redirect } from 'react-router-dom';
 import RMHApi from '../RMHApi';
 import { useAuth } from './context/auth';
 import getFromToken from '../utils';
-import SideNav from './SideNav';
+import SideNavTherapist from './SideNavTherapist';
 import Graph from './Graph';
 import PatientsList from './PatientsList';
-import Appointments from './Appointments';
+import Appointments from './TherapistAppointments';
 import axios from 'axios';
 import "../vendor/sb-admin-2.css";
 import "../vendor/fontawesome-free/css/all.min.css";
@@ -33,12 +33,12 @@ const HQDashboard = () => {
         
         const getUser = async () => {
           try {
-              
+            let mounted = true;
             const res = await RMHApi.getTherapist(userId);      
-            setFormData(res.user)
-            renderPatients(res.user);
-            
-            
+            if (mounted) {
+              setFormData(res.user)
+              renderPatients(res.user);
+            }
           } catch (err) {
             
           }
@@ -68,7 +68,7 @@ const HQDashboard = () => {
     <>
       <div id="wrapper">
         {/* SIDENAV */}
-        <SideNav/>
+        <SideNavTherapist/>
         
         {/* CONTENT */}
         <div id="content-wrapper" className="d-flex flex-column">
@@ -102,7 +102,7 @@ const HQDashboard = () => {
                             </div>
                             {/* <!-- Card Body --> */}
                             <div className="card-body">
-                                {/* <Appointments userEmail={formData.email}/> */}
+                                <Appointments name={formData.first_name} last={formData.last_name} />
                             </div>
                         </div>
                     </div>

@@ -6,20 +6,13 @@ function Nav() {
   const existingToken = localStorage.getItem('token')
   const [authToken, setAuthToken] = useState(existingToken);
   let nav = <>
-            <div className="nav-left">
-                <li className="nav-item">
-                  <Link className="nav-link" to="/">
-                    <i className="fas fa-home"></i>
-                    Home
-                  </Link>
-                </li>
-                <li className="nav-item"><Link className="nav-link" to="/register">Register</Link></li>
-                <li className="nav-item"><Link className="nav-link" to="/login">Login</Link></li>
-            </div>
-            <div className="nav-right">
-              
-            </div>
-              
+              <li className="nav-item"><Link className="nav-link" to="/">
+              <i className="fas fa-home"></i>
+                Home
+                </Link>
+              </li>
+              <li className="nav-item"><Link className="nav-link" to="/register">Register</Link></li>
+              <li className="nav-item"><Link className="nav-link" to="/login">Login</Link></li>
             </>;
 
   const setToken = (token) => {
@@ -41,10 +34,13 @@ function Nav() {
           </>
   } else {
     nav = <>
+              <li className="nav-item"><Link className="nav-link" to="/">
+              <i className="fas fa-home"></i>
+                Home
+                </Link>
+              </li>
               <li className="nav-item"><Link className="nav-link" to="/register">Register</Link></li>
               <li className="nav-item"><Link className="nav-link" to="/login">Login</Link></li>
-              <li className="nav-item"><Link className="nav-link btn btn-danger btn-sm" to="/registerTherapist">Register Therapists</Link></li>
-              <li className="nav-item"><Link className="nav-link btn btn-danger btn-sm" to="/therapists">Login Therapists</Link></li>
             </>;
   }
 

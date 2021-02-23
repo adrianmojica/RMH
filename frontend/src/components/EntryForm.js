@@ -25,7 +25,8 @@ const EntryForm = () => {
     const getUser = async () => {
       try {
         const res = await RMHApi.getUser(patient);      
-        setPatient_id(res.user)
+        console.log("->",res);
+        setPatient_id(res.user[0].id)
        
       } catch (err) {
         
@@ -37,9 +38,9 @@ const EntryForm = () => {
 
   function handleSubmit(event){
     event.preventDefault();
-    console.log("here");
+    console.log("here",patient_id);
     let data = {
-      patient_id: patient_id.id,
+      patient_id: patient_id,
       nrs1: nrs1,
       nrs2: nrs2,
       nrs3: nrs3,

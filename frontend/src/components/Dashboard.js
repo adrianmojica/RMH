@@ -19,7 +19,7 @@ const Dashboard = () => {
         first_name: "",
         last_name: "",
         email: "",
-        therapist: "DeMarco",
+        therapist: "",
         password:"",
         is_admin: false
     })
@@ -30,10 +30,12 @@ const Dashboard = () => {
         
         const getUser = async () => {
           try {
-              
+            let mounted = true;
             const res = await RMHApi.getUser(userId);      
-            setFormData(res.user)
-            
+            console.log(res.user[0])
+            if (mounted) {
+                setFormData(res.user[0])
+            }
           } catch (err) {
             
           }

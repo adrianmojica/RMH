@@ -2,9 +2,7 @@
     margin-top:30px;
 }
 #root {
-    .nav {
-    background-color: #df4e4e;
-}
+
 }
 
 .patients-card-container {
@@ -20,3 +18,26 @@
     background-size: cover;
 }
 
+
+.bg-gradient-client {
+    background-color: #34A299;
+    background-image: linear-gradient(
+180deg
+, #34A299 10%, #224abe 100%);
+    background-size: cover;
+}
+
+
+.app-frame {
+    overflow-y: scroll;
+    max-height: 380px;
+}
+
+
+.app-alert {
+    text-align: left;
+}
+
+.alert-btn {
+    margin-top: 10px;
+}

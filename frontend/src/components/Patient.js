@@ -9,7 +9,7 @@ import './Patient.scss'
 
 
 const Patient = (props) => {
-  console.log("client props", props);
+  // console.log("client props", props);
  
 
   return (

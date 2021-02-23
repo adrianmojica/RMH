@@ -111,7 +111,6 @@ const Graph = (userId) => {
       title: {
         display: true,
         position: "top",
-        text: "Line Graph",
         fontSize: 18,
         fontColor: "#111"
       },

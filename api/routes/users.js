@@ -9,13 +9,14 @@ const jwt = require("jsonwebtoken");
 const { BCRYPT_WORK_FACTOR, SECRET_KEY } = require("../config");
 const { ensureLoggedIn, ensureAdmin } = require("../middleware/auth");
 
-router.get('/', (req, res, next) => {
-  res.send("user IS WORKING!!!")
-})
+// router.get('/', (req, res, next) => {
+//   res.send("user IS WORKING!!!")
+// })
 
 router.get('/:username', async function(req, res, next){
     console.log(req.params.username,"************");
     let username = req.params.username;
+    
     try {
       if (!req.params.username) {
         throw new ExpressError("something went wrong", 400);
@@ -25,7 +26,7 @@ router.get('/:username', async function(req, res, next){
          FROM users
          WHERE username = $1`,
         [username]);
-      const user = results.rows[0];
+      const user = results.rows;
       console.log(user);
       return res.json({ message: `got user!`, user })
     } catch(e) {
@@ -56,14 +57,14 @@ router.get('/patient/:id', async function(req, res, next){
 
 //get users by therapist
 router.post('/patients', async (req, res, next) =>{
-  console.log('retreive patients with therapist ->', req.body);
+  // console.log('retreive patients with therapist ->', req.body);
   try {
     const therapist = req.body.fullName;
     const results = await db.query(`
       SELECT id, first_name, last_name FROM users
       WHERE therapist = $1`,
       [therapist]);
-    console.log(results);
+    // console.log(results);
     return res.json(results.rows);
   } catch (e) {
     return next(e)

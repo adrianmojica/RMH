@@ -33,20 +33,17 @@ router.get('/:email', (req, res, next) => {
   });
 })
 
-
-
-//get Appointments by therapist
-router.get('/', (req, res, next) => {
-  // let therapist = req.params.therapist
-  let therapist = "Praia"
+//get users by therapist
+router.post('/patients', async (req, res, next) =>{
+  console.log('retreive patients with therapist ->', req.body.fullName);
+  let therapist = req.body.fullName;
   let apt;
   let currentDate = new Date();
   let cDay = currentDate.getDate();
   let cMonth = currentDate.getMonth() + 1
   let cYear = currentDate.getFullYear()
   let date = cDay+"-"+cMonth+"-"+cYear;
-  
-  apt = acuity.request('/appointments?&minDate='+date+"&direction=ASC", function (err, response, appointments) {
+  apt = acuity.request('/appointments?&minDate='+date+"&direction=ASC&max=10", function (err, response, appointments) {
     if (err) return console.error(err);
     apt = appointments;
     var filtered = [];
@@ -55,9 +52,36 @@ router.get('/', (req, res, next) => {
             filtered.push(appointments[i]);
         }
     }
+    console.log("filetered-->",filtered);
     res.send(filtered);
   });
+
 })
+
+// //get Appointments by therapist
+// router.get('/therapist/:fullName', (req, res, next) => {
+//   let name = req.params.fullName;
+//   console.log("******************", name);
+//   let therapist = "Praia"
+//   let apt;
+//   let currentDate = new Date();
+//   let cDay = currentDate.getDate();
+//   let cMonth = currentDate.getMonth() + 1
+//   let cYear = currentDate.getFullYear()
+//   let date = cDay+"-"+cMonth+"-"+cYear;
+  
+//   apt = acuity.request('/appointments?&minDate='+date+"&direction=ASC", function (err, response, appointments) {
+//     if (err) return console.error(err);
+//     apt = appointments;
+//     var filtered = [];
+//     for (var i = 0; i < appointments.length; i++) {
+//         if (appointments[i].calendar.indexOf(therapist) >= 0) {
+//             filtered.push(appointments[i]);
+//         }
+//     }
+//     res.send(filtered);
+//   });
+// })
 
 
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { useHistory } from 'react-router-dom';
-
+import logo from '../assets/logo.png'; 
+import './SideNav.scss'
 
 
 
@@ -24,9 +25,12 @@ function SideNav() {
 
 
   return (
-    <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <ul className="navbar-nav bg-gradient-client sidebar sidebar-dark accordion" id="accordionSidebar">
       <a className="sidebar-brand d-flex align-items-center justify-content-center" href="/">
-          <div className="sidebar-brand-text mx-3">Remote Mental Health</div>
+          <div className="sidebar-brand-text mx-3">
+						<img className="logo" src={logo}/><br></br>
+                Remote Mental Health
+          </div>
       </a>
       <li className="nav-item active">
         <a className="nav-link" href="/dashboard">
@@ -59,7 +63,7 @@ function SideNav() {
           </div>
       </li>
       <hr className="sidebar-divider"/>
-      <li className="nav-item">
+      {/* <li className="nav-item">
           <a className="nav-link collapsed" href="/" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
               <i className="fas fa-fw fa-folder"></i>
               <span>Pages</span>
@@ -73,7 +77,7 @@ function SideNav() {
                   <a className="collapse-item" href="/">Remote Mental Health Main Site</a>
               </div>
           </div>
-      </li>
+      </li> */}
       <li className="nav-item">
             <a className="nav-link" href="/" data-target="#collapsePages" onClick={handleLogOut}>
               <i className="fas fa-sign-out-alt"></i>

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Home from "./Home";
 import PrivateRoute from './PrivateRoute';
-import Profile from './Profile'
-import Dashboard from './Dashboard'
-import HQDashboard from './HQDashboard'
+import Profile from './Profile';
+import TherapistProfile from './TherapistProfile';
+import Dashboard from './Dashboard';
+import HQDashboard from './HQDashboard';
 import NotFound from './NotFound';
 import Register from "./Register";
 import RegisterTherapist from "./TherapistRegister";
@@ -29,8 +30,8 @@ function Routes() {
 
   return (
     <AuthContext.Provider value={{ authToken, setAuthToken: setToken }}>
-     
-        <Switch>
+     <BrowserRouter>
+     <Switch>
           <Route exact path="/register"><Register /></Route>
           <Route exact path="/login"><Login /></Route>
           <Route exact path="/"><Home /></Route>
@@ -39,12 +40,12 @@ function Routes() {
           <PrivateRoute exact path="/profile" component={Profile} />
           <PrivateRoute exact path="/dashboard" component={Dashboard} />
           <PrivateRoute exact path="/hq" component={HQDashboard} />
-          <PrivateRoute exact path="/hq" component={HQDashboard} />
           <PrivateRoute exact path="/patients/:id" component={PatientDetail} />
+          <PrivateRoute exact path="/therapistProfile" component={TherapistProfile} />
           <PrivateRoute exact path="/newEntry" component={NewEntry} />
           <Route component={NotFound} />
         </Switch>
-     
+     </BrowserRouter>
     </AuthContext.Provider>
   );
 }
