@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import axios from 'axios';
 import './Login.scss';
-import { useHistory } from 'react-router-dom';
+import { browserHistory, useHistory } from 'react-router-dom';
 
 
 function Login() {
@@ -11,6 +11,7 @@ function Login() {
     username: "",
     password: "",
   })
+  const [loggedIn, setLoggedIn] = useState();
   
   function handleChange(evt) {
     const {name, value} = evt.target;
@@ -41,12 +42,19 @@ function Login() {
     localStorage.setItem('token', res.data.token);
     localStorage.setItem('username', res.data.username);
     if(res.data.message === "Logged in!" || res.status == 200){
+      console.log("here");
       if(res.data.token) {
-        history.push('/dashboard');
+        setLoggedIn(true);
       }
     }
   }
 
+  if (loggedIn) {
+    history.push('/dashboard');
+  } else {
+    console.log('here');
+  }
+  
 
   return (
     <>

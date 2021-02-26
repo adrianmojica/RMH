@@ -75,11 +75,11 @@ useEffect(() => {
         return (
           <div className="app-alert" key={i} id={item.id} name={item.firstName} last_name={item.lastName}>
             <Alert variant="success">
-              <h6><i class="fas fa-clock"></i> {item.date} / {item.time}</h6>
+              <h6><i className="fas fa-clock"></i> {item.date} / {item.time}</h6>
               <p>
                 {item.firstName} {item.lastName}<br></br>
                 {item.category}<br></br>
-                <a href={item.firstName+"_"+item.lastName} className="alert-btn btn btn-sm btn-success"><i class="fas fa-video"></i> Meeting</a>
+                <a href={item.firstName+"_"+item.lastName} className="alert-btn btn btn-sm btn-success"><i className="fas fa-video"></i> Meeting</a>
               </p>
             </Alert>
           </div>

@@ -11,6 +11,7 @@ function TherapistLogin() {
     username: "",
     password: "",
   })
+  const [loggedIn, setLoggedIn] = useState();
   
   function handleChange(evt) {
     const {name, value} = evt.target;
@@ -43,11 +44,19 @@ function TherapistLogin() {
     localStorage.setItem('username', res.data.username);
     if(res.data.message === "Logged in!" || res.status === 200){
       if(res.data.token) {
+        setLoggedIn(true);
         history.push('/hq');
       }
     }
   }
 
+
+  if (loggedIn) {
+    history.push('/hq');
+  } else {
+    console.log('here');
+  }
+  
 
 
   return (
